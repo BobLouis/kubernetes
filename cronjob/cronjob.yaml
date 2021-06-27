@@ -1,0 +1,19 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+    name: cleanpods
+spec:
+  schedule: "*/5 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: cleanpods
+            image: busybox
+            imagePullPolicy: IfNotPresent
+            command:
+            - /bin/zsh
+            - -c
+            - cd /Users/kounuki/kubernetes/lab7/shell_script && ./list_running_pod 
+          restartPolicy: OnFailure
